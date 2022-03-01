@@ -1,0 +1,11 @@
+sudo: required
+
+services: docker
+
+before_install:
+  - docker-compose up --build -d
+
+script:
+  - docker-compose exec 'DJANGO_ENV=test' keroz_web_1 python manage.py makemigrations
+  - docker-compose exec 'DJANGO_ENV=test' keroz_web_1 python manage.py migrate
+  - docker-compose exec 'DJANGO_ENV=test' keroz_web_1 python manage.py test 
